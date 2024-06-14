@@ -1,0 +1,14 @@
+{
+    "name": "vwochnik/mail",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vincent Wochnik",
+            "email": "v.wochnik@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

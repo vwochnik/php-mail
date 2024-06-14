@@ -1,5 +1,6 @@
 <?php
 //https://github.com/archer411/contact-me/blob/master/contact.php:q
+//https://stackoverflow.com/questions/14456673/sending-email-with-php-from-an-smtp-server
 
 function fail($code, $error)
 {
@@ -24,7 +25,7 @@ function sanitize($data)
 }
 
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT);
-//date_default_timezone_set("<your timezone>");
+date_default_timezone_set('Etc/UTC');
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     fail(400, "only POST supported");
