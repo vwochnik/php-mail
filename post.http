@@ -3,8 +3,8 @@ POST http://localhost/mail.php
 Content-Type: application/json
 
 {
-  "name": "test",
-  "email": "test@localhost",
+  "name": "Vincent Wochnik",
+  "email": "v.wochnik@gmail.com",
   "subject": "Test",
-  "message": "Hello"
+  "message": "Hello World!"
 }

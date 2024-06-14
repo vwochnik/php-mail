@@ -15,6 +15,14 @@ function success()
     die(json_encode(array('status' => 'success')));
 }
 
+function sanitize($data)
+{
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT);
 //date_default_timezone_set("<your timezone>");
 
@@ -27,11 +35,23 @@ if (json_last_error() != JSON_ERROR_NONE) {
     fail(400, "bad request");
 }
 
-$keys = array("name", "email", "subject", "message");
-foreach ($keys as $key) {
+foreach (array("name", "email", "subject", "message") as $key) {
     if (empty($data[$key])) {
         fail(400, $key ." required");
     }
+}
+
+$name = sanitize($data["name"]);
+$email = sanitize($data["email"]);
+$subject = sanitize($data["subject"]);
+$message = sanitize($data["message"]);
+
+if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
+    fail(400, "invalid name");
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    fail(400, "invalid email");
 }
 
 success();
