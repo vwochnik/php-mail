@@ -1,28 +1,40 @@
 <?php
-https://github.com/archer411/contact-me/blob/master/contact.php:q
+//https://github.com/archer411/contact-me/blob/master/contact.php:q
 
-function fail($error)
+function fail($code, $error)
 {
-    die(json_encode(json_decode('{"status": "error", "error": "' . $error . '"}', true)));
+    http_response_code($code);
+    header('Content-Type: application/json');
+    die(json_encode(array('status' => 'error', 'error' => $error)));
 }
 
 function success()
 {
-    die(json_encode(json_decode('{"status": "success"}', true)));
+    http_response_code(200);
+    header('Content-Type: application/json');
+    die(json_encode(array('status' => 'success')));
 }
 
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT);
-
 //date_default_timezone_set("<your timezone>");
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    fail("only POST supported")
+    fail(400, "only POST supported");
 }
 
 $data = json_decode(file_get_contents('php://input'), true);
 if (json_last_error() != JSON_ERROR_NONE) {
-
+    fail(400, "bad request");
 }
+
+$keys = array("name", "email", "subject", "message");
+foreach ($keys as $key) {
+    if (empty($data[$key])) {
+        fail(400, $key ." required");
+    }
+}
+
+success();
 
 // Import PHPMailer classes into the global namespace
 // These must be at the top of your script, not inside a function

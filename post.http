@@ -1,7 +1,10 @@
 ### GET request to example server
-POST http://localhost/
+POST http://localhost/mail.php
 Content-Type: application/json
 
 {
-  "email": "test"
+  "name": "test",
+  "email": "test@localhost",
+  "subject": "Test",
+  "message": "Hello"
 }
