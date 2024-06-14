@@ -1,0 +1,7 @@
+### GET request to example server
+POST http://localhost/
+Content-Type: application/json
+
+{
+  "email": "test"
+}
