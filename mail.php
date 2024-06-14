@@ -1,6 +1,8 @@
 <?php
-//https://github.com/archer411/contact-me/blob/master/contact.php:q
-//https://stackoverflow.com/questions/14456673/sending-email-with-php-from-an-smtp-server
+require __DIR__ . '/vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 function fail($code, $error)
 {
@@ -24,7 +26,7 @@ function sanitize($data)
   return $data;
 }
 
-error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT);
+//error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT);
 date_default_timezone_set('Etc/UTC');
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -54,13 +56,6 @@ if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     fail(400, "invalid email");
 }
-
-success();
-
-// Import PHPMailer classes into the global namespace
-// These must be at the top of your script, not inside a function
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 //Load composer's autoloader
 require 'vendor/autoload.php';
