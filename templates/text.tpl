@@ -6,5 +6,7 @@ Name: {{name}}
 E-Mail: {{email}}
 Subject: {{subject}}
 Date: {{date}}
+IP: {{ip}}
+User-Agent: {{agent}}
 
 {{message}}

@@ -41,6 +41,12 @@
 <tr>
 <td align="right" valign="top">Date:&nbsp;</td><td valign="top">{{date}}</td>
 </tr>
+<tr>
+<td align="right" valign="top">IP:&nbsp;</td><td valign="top">{{ip}}</td>
+</tr>
+<tr>
+<td align="right" valign="top">User-Agent:&nbsp;</td><td valign="top">{{agent}}</td>
+</tr>
 </table>
 {{message}}
 </td>

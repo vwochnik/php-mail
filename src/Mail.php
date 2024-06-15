@@ -16,7 +16,7 @@ class Mail
     public function send($data)
     {
         $v = new Validator($data);
-        $v->rule('required', ['name', 'email', 'subject', 'message']);
+        $v->rule('required', ['name', 'email', 'subject', 'message', 'ip', 'agent']);
         $v->rule('regex', 'name', "/^[a-zA-Z-' ]*$/");
         $v->rule('email', 'email');
 
