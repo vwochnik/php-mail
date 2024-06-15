@@ -31,6 +31,9 @@ class Mail
 
         $data["from"] = $_ENV["MAIL_FROM"];
 
+        $today = new \DateTime('now');
+        $data["date"] = $today->format('Y-m-d');
+
         $mail = $this->setupMailer();
 
         try
@@ -41,7 +44,8 @@ class Mail
 
             $mail->isHTML(true);
             $mail->Subject = $data["subject"];
-            $mail->Body    = $this->twig->render("mail.html", $data);
+            $mail->Body    = $this->twig->render("html.tpl", $data);
+            $mail->AltBody = $this->twig->render("text.tpl", $data);
 
             $mail->send();
         } catch (Exception $e) {
