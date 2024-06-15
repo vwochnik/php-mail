@@ -2,6 +2,8 @@
 namespace Mail;
 
 use Valitron\Validator;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class Mail
 {
@@ -14,15 +16,53 @@ class Mail
     public function send($data)
     {
         $v = new Validator($data);
-        $v->rule('required', 'name');
+        $v->rule('required', ['name', 'email', 'subject', 'message']);
+        $v->rule('regex', 'name', "/^[a-zA-Z-' ]*$/");
+        $v->rule('email', 'email');
 
         if(!$v->validate())
         {
-            //print_r($v->errors());
-            throw new MailException("invalid input");
+            $message = implode(", ", array_map(function($k)
+            {
+                return strtolower($k[0]);
+            }, $v->errors()));
+            throw new MailException($message);
         }
 
-        return $this->twig->render("mail.html", array());
+        $data["from"] = $_ENV["MAIL_FROM"];
+
+        $mail = $this->setupMailer();
+
+        try
+        {
+            //Recipients
+            $mail->setFrom($data["from"]);
+            $mail->addAddress($data["email"], $data["name"]);
+
+            $mail->isHTML(true);
+            $mail->Subject = $data["subject"];
+            $mail->Body    = $this->twig->render("mail.html", $data);
+
+            $mail->send();
+        } catch (Exception $e) {
+            throw new MailException($e->getMessage());
+        }
     }
 
+    private function setupMailer()
+    {
+        $mail = new PHPMailer(true);
+        //Server settings
+        $mail->SMTPDebug = 0;
+        $mail->CharSet   = 'UTF-8';
+        $mail->isSMTP();
+        $mail->Host       = $_ENV["SMTP_HOST"];
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $_ENV["SMTP_USER"];
+        $mail->Password   = $_ENV["SMTP_PASS"];
+        $mail->SMTPSecure = $_ENV["SMTP_SECURE"];
+        $mail->Port       = $_ENV["SMTP_PORT"];
+
+        return $mail;
+    }
 }
