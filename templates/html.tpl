@@ -30,25 +30,19 @@
 <td bgcolor="#ffffff" style="padding: 25px 35px 25px 35px;">
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="right" valign="top">Name:&nbsp;</td><td valign="top">{{=it.name}}</td>
+<td align="right" valign="top">Name:&nbsp;</td><td valign="top">{{name}}</td>
 </tr>
 <tr>
-<td align="right" valign="top">E-Mail:&nbsp;</td><td valign="top">{{=it.email}}</td>
+<td align="right" valign="top">E-Mail:&nbsp;</td><td valign="top">{{email}}</td>
 </tr>
 <tr>
-<td align="right" valign="top">Subject:&nbsp;</td><td valign="top">{{=it.subject}}</td>
+<td align="right" valign="top">Subject:&nbsp;</td><td valign="top">{{subject}}</td>
 </tr>
 <tr>
-<td align="right" valign="top">Date:&nbsp;</td><td valign="top">{{=it.date}}</td>
-</tr>
-<tr>
-<td align="right" valign="top">User&nbsp;Agent:&nbsp;</td><td valign="top">{{=it.agent}}</td>
-</tr>
-<tr>
-<td align="right" valign="top">IP&nbsp;Address:&nbsp;</td><td valign="top">{{=it.ip}}</td>
+<td align="right" valign="top">Date:&nbsp;</td><td valign="top">{{date}}</td>
 </tr>
 </table>
-{{=it.message}}
+{{message}}
 </td>
 </tr>
 </table>
