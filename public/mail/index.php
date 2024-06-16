@@ -1,11 +1,5 @@
 <?php
-require dirname(__DIR__, 2) . '/vendor/autoload.php';
-
-use Dotenv\Dotenv;
-use DNSBL\DNSBL;
-use Mail\Mail;
-use Mail\MailException;
-use Stash;
+$mail = require dirname(__DIR__, 2) .'/index.php';
 
 function fail($code, $error)
 {
@@ -36,33 +30,9 @@ if (json_last_error() != JSON_ERROR_NONE) {
 $data["ip"] = $_SERVER['REMOTE_ADDR'];
 $data["agent"] = $_SERVER['HTTP_USER_AGENT'];
 
-$dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
-$dotenv->load();
-
-$driver = new Stash\Driver\FileSystem(array(
-    "path" => dirname(__DIR__, 2) ."/tmp"
-));
-$pool = new Stash\Pool($driver);
-
-$loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__, 2) ."/templates");
-$twig = new \Twig\Environment($loader, []);
-
-$dnsbl = new DNSBL(array(
-    'blacklists' => array(
-        "dnsbl-1.uceprotect.net",
-        "dnsbl-2.uceprotect.net",
-        "dnsbl-3.uceprotect.net",
-        "dnsbl.dronebl.org",
-        "all.s5h.net",
-        "b.barracudacentral.org"
-    )
-));
-
-$mail = new Mail($twig, $dnsbl, $pool);
-
 try
 {
-    $result = $mail->send($data);
+    $mail->send($data);
     success();
 }
 catch (MailException $e)
