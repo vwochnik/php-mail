@@ -1,5 +1,5 @@
 ### GET request to example server
-POST http://localhost/
+POST http://localhost/mail/
 Content-Type: application/json
 
 {

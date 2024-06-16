@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
 use Mail\Mail;
@@ -34,10 +34,10 @@ if (json_last_error() != JSON_ERROR_NONE) {
 $data["ip"] = $_SERVER['REMOTE_ADDR'];
 $data["agent"] = $_SERVER['HTTP_USER_AGENT'];
 
-$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
 
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ ."/templates");
+$loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__, 2) ."/templates");
 $twig = new \Twig\Environment($loader, []);
 
 $mail = new Mail($twig);
