@@ -29,8 +29,6 @@ class Mail
             throw new MailException($message);
         }
 
-        $data["from"] = $_ENV["MAIL_FROM"];
-
         $today = new \DateTime('now');
         $data["date"] = $today->format('Y-m-d');
 
@@ -39,8 +37,9 @@ class Mail
         try
         {
             //Recipients
-            $mail->setFrom($data["from"]);
-            $mail->addAddress($data["email"], $data["name"]);
+            $mail->setFrom($_ENV["MAIL_ADDR"], $_ENV["MAIL_NAME"]);
+            $mail->addReplyTo($data["email"], $data["name"]);
+            $mail->addAddress($_ENV["MAIL_ADDR"], $_ENV["MAIL_NAME"]);
 
             $mail->isHTML(true);
             $mail->Subject = $data["subject"];
