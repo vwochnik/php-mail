@@ -2,6 +2,7 @@
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
+use DNSBL\DNSBL;
 use Mail\Mail;
 use Mail\MailException;
 
@@ -40,7 +41,18 @@ $dotenv->load();
 $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__, 2) ."/templates");
 $twig = new \Twig\Environment($loader, []);
 
-$mail = new Mail($twig);
+$dnsbl = new DNSBL(array(
+    'blacklists' => array(
+        "dnsbl-1.uceprotect.net",
+        "dnsbl-2.uceprotect.net",
+        "dnsbl-3.uceprotect.net",
+        "dnsbl.dronebl.org",
+        "all.s5h.net",
+        "b.barracudacentral.org"
+    )
+));
+
+$mail = new Mail($twig, $dnsbl);
 
 try
 {

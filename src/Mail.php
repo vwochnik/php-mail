@@ -8,9 +8,12 @@ use PHPMailer\PHPMailer\Exception;
 class Mail
 {
     protected $twig;
+    protected $dnsbl;
 
-    public function __construct($twig) {
+    public function __construct($twig, $dnsbl)
+    {
         $this->twig = $twig;
+        $this->dnsbl = $dnsbl;
     }
 
     public function send($data)
@@ -19,6 +22,7 @@ class Mail
         $v->rule('required', ['name', 'email', 'subject', 'message', 'ip', 'agent']);
         $v->rule('regex', 'name', "/^[a-zA-Z-' ]*$/");
         $v->rule('email', 'email');
+        $v->rule('ip', 'ip');
 
         if(!$v->validate())
         {
@@ -27,6 +31,11 @@ class Mail
                 return strtolower($k[0]);
             }, $v->errors()));
             throw new MailException($message);
+        }
+
+        if($this->dnsbl->isListed($data["ip"]))
+        {
+            throw new MailException("spam detected");
         }
 
         $today = new \DateTime('now');

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1d66fae6bd78e2924546da34ad60d0e",
+    "content-hash": "9171b4a2aced745a25580d24bf602720",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -67,6 +67,50 @@
                 }
             ],
             "time": "2023-11-12T22:16:48+00:00"
+        },
+        {
+            "name": "jbboehr/dnsbl",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jbboehr/dnsbl.php.git",
+                "reference": "1dba51997aaf90323555bfa7ec65e82e462550c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jbboehr/dnsbl.php/zipball/1dba51997aaf90323555bfa7ec65e82e462550c2",
+                "reference": "1dba51997aaf90323555bfa7ec65e82e462550c2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DNSBL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "PHP"
+            ],
+            "authors": [
+                {
+                    "name": "John Boehr",
+                    "email": "jbboehr@gmail.com"
+                }
+            ],
+            "description": "DNSBL lookup",
+            "homepage": "http://github.com/jbboehr/dnsbl",
+            "keywords": [
+                "dnsbl"
+            ],
+            "support": {
+                "issues": "https://github.com/jbboehr/dnsbl.php/issues",
+                "source": "https://github.com/jbboehr/dnsbl.php/tree/v0.1.0"
+            },
+            "time": "2015-01-28T00:38:19+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
