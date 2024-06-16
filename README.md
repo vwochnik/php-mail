@@ -24,5 +24,18 @@ composer install
 
 5. Upload to your webserver such that public is inside document root.
 
+## Usage
+```
+POST /mail/
+Content-Type: application/json
+
+{
+  "name": "Example",
+  "email": "example@example.com",
+  "subject": "Test",
+  "message": "Hello World!"
+}
+```
+
 ## License
 MIT
