@@ -1,6 +1,6 @@
 # PHP-Mail
 
-> Small self-hosted PHP contact form endpoint as a drop-in for static websites.
+> Small self-hosted PHP contact form endpoint as a drop-in for static websites. It supports DNSBL and rate limitiing.
 > 
 
 ## Install
@@ -36,8 +36,6 @@ Content-Type: application/json
   "message": "Hello World!"
 }
 ```
-
-This endpoint is guarded by DNSBL.
 
 ## License
 MIT

@@ -23,7 +23,7 @@ class Mail
         $this->pool = $pool;
 
         $this->adapter = new StashAdapter($this->pool);
-        $this->rateLimit = new RateLimit("mail", 100, 3600, $this->adapter);
+        $this->rateLimit = new RateLimit("mail", 3, 3600, $this->adapter);
     }
 
     public function send($data)
