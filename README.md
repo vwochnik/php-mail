@@ -20,7 +20,9 @@ cd php-mail
 composer install
 ```
 
-4. Upload to your webserver such that public is inside document root.
+4. Copy `.env.example` to `.env` and insert SMTP configuration there.
+
+5. Upload to your webserver such that public is inside document root.
 
 ## License
 MIT
