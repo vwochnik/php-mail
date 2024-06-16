@@ -5,6 +5,7 @@ use Dotenv\Dotenv;
 use DNSBL\DNSBL;
 use Mail\Mail;
 use Mail\MailException;
+use Stash;
 
 function fail($code, $error)
 {
@@ -38,6 +39,11 @@ $data["agent"] = $_SERVER['HTTP_USER_AGENT'];
 $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
 
+$driver = new Stash\Driver\FileSystem(array(
+    "path" => dirname(__DIR__, 2) ."/tmp"
+));
+$pool = new Stash\Pool($driver);
+
 $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__, 2) ."/templates");
 $twig = new \Twig\Environment($loader, []);
 
@@ -52,7 +58,7 @@ $dnsbl = new DNSBL(array(
     )
 ));
 
-$mail = new Mail($twig, $dnsbl);
+$mail = new Mail($twig, $dnsbl, $pool);
 
 try
 {

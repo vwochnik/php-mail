@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9171b4a2aced745a25580d24bf602720",
+    "content-hash": "9a114bb26a0bd76c7cf1079ee86c4458",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -111,6 +111,64 @@
                 "source": "https://github.com/jbboehr/dnsbl.php/tree/v0.1.0"
             },
             "time": "2015-01-28T00:38:19+00:00"
+        },
+        {
+            "name": "palepurple/rate-limit",
+            "version": "2.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DavidGoodwin/RateLimit.git",
+                "reference": "f1e9d5020adaf69b65a6ab5f2253ee96397ed2a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DavidGoodwin/RateLimit/zipball/f1e9d5020adaf69b65a6ab5f2253ee96397ed2a6",
+                "reference": "f1e9d5020adaf69b65a6ab5f2253ee96397ed2a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 5.6"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.7",
+                "php-coveralls/php-coveralls": "^2.2",
+                "php-parallel-lint/php-parallel-lint": "^1.0",
+                "phpstan/phpstan": "*",
+                "phpunit/phpunit": "^8",
+                "predis/predis": "^1.1",
+                "psr/cache": "^1.0",
+                "tedivm/stash": "^0.16",
+                "vimeo/psalm": "*"
+            },
+            "suggest": {
+                "ext-apc": "^4.0",
+                "ext-apcu": "^4.0",
+                "ext-redis": "^2.2",
+                "predis/predis": "^1.1",
+                "tedivm/stash": "^0.15"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PalePurple\\RateLimit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Goodwin",
+                    "email": "david@palepurple.co.uk"
+                }
+            ],
+            "description": "PHP rate limiting library with Token Bucket Algorithm, originally touhonoob/rate-limit",
+            "support": {
+                "issues": "https://github.com/DavidGoodwin/RateLimit/issues",
+                "source": "https://github.com/DavidGoodwin/RateLimit/tree/2.0.7"
+            },
+            "time": "2023-03-04T16:02:37+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -267,6 +325,55 @@
                 }
             ],
             "time": "2023-11-12T21:59:55+00:00"
+        },
+        {
+            "name": "psr/cache",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/cache.git",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for caching libraries",
+            "keywords": [
+                "cache",
+                "psr",
+                "psr-6"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/cache/tree/master"
+            },
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -573,6 +680,82 @@
                 }
             ],
             "time": "2024-01-29T20:11:03+00:00"
+        },
+        {
+            "name": "tedivm/stash",
+            "version": "v0.17.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tedious/Stash.git",
+                "reference": "a2c9df16c77b13e1f90462f30597a772166eea8f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tedious/Stash/zipball/a2c9df16c77b13e1f90462f30597a772166eea8f",
+                "reference": "a2c9df16c77b13e1f90462f30597a772166eea8f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">7.0",
+                "psr/cache": "~1.0"
+            },
+            "provide": {
+                "psr/cache-implementation": "1.0.0"
+            },
+            "require-dev": {
+                "dms/phpunit-arraysubset-asserts": "^0.4.0",
+                "friendsofphp/php-cs-fixer": "^2.8",
+                "php": "^7.2|^8.0",
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Stash\\": "src/Stash/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Hafner",
+                    "email": "tedivm@tedivm.com"
+                },
+                {
+                    "name": "Josh Hall-Bachner",
+                    "email": "charlequin@gmail.com"
+                }
+            ],
+            "description": "The place to keep your cache.",
+            "homepage": "http://github.com/tedious/Stash",
+            "keywords": [
+                "apc",
+                "cache",
+                "caching",
+                "memcached",
+                "psr-6",
+                "psr6",
+                "redis",
+                "sessions"
+            ],
+            "support": {
+                "issues": "https://github.com/tedious/Stash/issues",
+                "source": "https://github.com/tedious/Stash/tree/v0.17.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tedivm",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/tedivm/stash",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-07-26T14:15:03+00:00"
         },
         {
             "name": "twig/twig",

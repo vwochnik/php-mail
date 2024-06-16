@@ -4,16 +4,26 @@ namespace Mail;
 use Valitron\Validator;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use \PalePurple\RateLimit\RateLimit;
+use \PalePurple\RateLimit\Adapter\Stash as StashAdapter;
 
 class Mail
 {
     protected $twig;
     protected $dnsbl;
+    protected $pool;
 
-    public function __construct($twig, $dnsbl)
+    protected $adapter;
+    protected $rateLimit;
+
+    public function __construct($twig, $dnsbl, $pool)
     {
         $this->twig = $twig;
         $this->dnsbl = $dnsbl;
+        $this->pool = $pool;
+
+        $this->adapter = new StashAdapter($this->pool);
+        $this->rateLimit = new RateLimit("mail", 100, 3600, $this->adapter);
     }
 
     public function send($data)
@@ -31,6 +41,11 @@ class Mail
                 return strtolower($k[0]);
             }, $v->errors()));
             throw new MailException($message);
+        }
+
+        if(!$this->rateLimit->check($data["ip"]))
+        {
+            throw new MailException("rate limit exceeded");
         }
 
         if($this->dnsbl->isListed($data["ip"]))
