@@ -7,4 +7,20 @@
 
 1. Clone this repository
 ```
+git clone https://github.com/vwochnik/php-mail.git
 ```
+
+2. CD into the directory
+```
+cd php-mail
+```
+
+3. Run composer
+```
+composer install
+```
+
+4. Upload to your webserver such that public is inside document root.
+
+## License
+MIT
