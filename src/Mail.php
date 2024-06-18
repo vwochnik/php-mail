@@ -43,14 +43,14 @@ class Mail
             throw new MailException($message);
         }
 
-        if($this->dnsbl->isListed($data["ip"]))
-        {
-            throw new MailException("spam detected");
-        }
-
         if(!$this->rateLimit->check($data["ip"]))
         {
             throw new MailException("rate limit exceeded");
+        }
+
+        if($this->dnsbl->isListed($data["ip"]))
+        {
+            throw new MailException("spam detected");
         }
 
         $today = new \DateTime('now');
