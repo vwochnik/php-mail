@@ -30,7 +30,7 @@ class Mail
     {
         $v = new Validator($data);
         $v->rule('required', ['name', 'email', 'subject', 'message', 'ip', 'agent']);
-        $v->rule('regex', 'name', "/^[a-zA-Z-' ]*$/");
+        $v->rule('regex', 'name', "/^[\\p{L}'][ \\p{L}'-]*[\\p{L}]$/u");
         $v->rule('email', 'email');
         $v->rule('ip', 'ip');
 
