@@ -1,5 +1,6 @@
 <?php
 $mail = require dirname(__DIR__, 2) .'/mail.php';
+use Mail\MailException;
 
 function fail($code, $error)
 {
