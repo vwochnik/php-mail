@@ -1,5 +1,5 @@
 <?php
-$mail = require dirname(__DIR__, 2) .'/index.php';
+$mail = require dirname(__DIR__, 2) .'/mail.php';
 
 function fail($code, $error)
 {
