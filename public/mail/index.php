@@ -15,6 +15,22 @@ function success()
     die(json_encode(array('status' => 'success')));
 }
 
+function get_ip()
+{
+    if(!empty($_SERVER['HTTP_CLIENT_IP']))
+    {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    }
+    elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+    {
+        return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+    else
+    {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+}
+
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT);
 date_default_timezone_set('Etc/UTC');
 
@@ -27,7 +43,7 @@ if (json_last_error() != JSON_ERROR_NONE) {
     fail(400, "bad request");
 }
 
-$data["ip"] = $_SERVER['REMOTE_ADDR'];
+$data["ip"] = get_ip();
 $data["agent"] = $_SERVER['HTTP_USER_AGENT'];
 
 try
