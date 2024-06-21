@@ -26,7 +26,7 @@ class Mail
         $this->rateLimit = new RateLimit("mail", 3, 3600, $this->adapter);
     }
 
-    public function send($data)
+    public function validate($data)
     {
         $v = new Validator($data);
         $v->rule('required', ['name', 'email', 'subject', 'message', 'ip', 'agent']);
@@ -47,7 +47,10 @@ class Mail
         {
             throw new MailException("rate limit exceeded");
         }
+    }
 
+    public function send($data)
+    {
         if($this->dnsbl->isListed($data["ip"]))
         {
             throw new MailException("spam detected");

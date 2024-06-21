@@ -49,6 +49,15 @@ $data["agent"] = $_SERVER['HTTP_USER_AGENT'];
 
 try
 {
+    $mail->validate($data);
+}
+catch (MailException $e)
+{
+    fail(400, $e->getMessage());
+}
+
+try
+{
     $mail->send($data);
     success();
 }
