@@ -5,6 +5,8 @@
 
 ## Install
 
+Requires PHP >= 7.3
+
 1. Clone this repository
 ```
 git clone https://github.com/vwochnik/php-mail.git
