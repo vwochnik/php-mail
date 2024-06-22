@@ -33,6 +33,9 @@ class Mail
         $v->rule('regex', 'name', "/^[\\p{L}'][ \\p{L}'-]*[\\p{L}]$/u");
         $v->rule('email', 'email');
         $v->rule('ip', 'ip');
+        $v->rule(function($field, $value, $params, $fields) {
+            return ($value == strip_tags($value));
+        }, ["name", "subject", "message", "agent"])->message("{field} contains html tags");
 
         if(!$v->validate())
         {
