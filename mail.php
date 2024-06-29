@@ -1,22 +1,12 @@
 <?php
 require __DIR__ .'/vendor/autoload.php';
 
-use Dotenv\Dotenv;
 use DNSBL\DNSBL;
+use Mail\Config;
 use Mail\Mail;
 use Mail\MailException;
-use Stash;
 
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-$driver = new Stash\Driver\FileSystem(array(
-    "path" => __DIR__ ."/tmp"
-));
-$pool = new Stash\Pool($driver);
-
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ ."/templates");
-$twig = new \Twig\Environment($loader, []);
+$config = new Config(__DIR__);
 
 $dnsbl = new DNSBL(array(
     'blacklists' => array(
@@ -29,4 +19,4 @@ $dnsbl = new DNSBL(array(
     )
 ));
 
-return new Mail($twig, $dnsbl, $pool);
+return new Mail($config, $dnsbl);

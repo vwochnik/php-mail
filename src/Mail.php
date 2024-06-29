@@ -4,29 +4,32 @@ namespace Mail;
 use \PalePurple\RateLimit\RateLimit;
 use \PalePurple\RateLimit\Adapter\Stash as StashAdapter;
 use Twig\Environment as TwigEnvironment;
+use Stash;
 use Stash\Pool;
 use DNSBL\DNSBL;
 use Mail\Handler\Handler;
 
 class Mail
 {
+    protected Config $config;
     protected DNSBL $dnsbl;
     protected Pool $pool;
-
+    protected RateLimit $rateLimit;
     protected Handler $handler;
 
-    protected $adapter;
-    protected $rateLimit;
-
-    public function __construct(TwigEnvironment $twig, DNSBL $dnsbl, Pool $pool)
+    public function __construct(Config $config, DNSBL $dnsbl)
     {
+        $this->config = $config;
         $this->dnsbl = $dnsbl;
-        $this->pool = $pool;
 
-        $this->adapter = new StashAdapter($pool);
-        $this->rateLimit = new RateLimit("mail", 3, 3600, $this->adapter);
+        $this->pool = new Pool(new Stash\Driver\FileSystem(array(
+           "path" => $config->getStashDirectory()
+       )));
 
-        $this->handler = Handler::get($_ENV["HANDLER"], $twig);
+        $this->rateLimit = new RateLimit("mail", 3, 3600, new StashAdapter($this->pool));
+
+        $mainConfig = $this->config->getMainConfiguration();
+        $this->handler = Handler::get($mainConfig["handler"], $config);
     }
 
     public function makeMessage(array $data)
