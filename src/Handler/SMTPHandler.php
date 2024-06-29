@@ -7,7 +7,7 @@ use Twig\Environment as TwigEnvironment;
 use Mail\Message;
 use Mail\Exception;
 
-class SMTPHandler implements Handler
+class SMTPHandler extends Handler
 {
     private TwigEnvironment $twig;
 

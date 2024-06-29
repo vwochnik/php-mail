@@ -7,7 +7,6 @@ use Twig\Environment as TwigEnvironment;
 use Stash\Pool;
 use DNSBL\DNSBL;
 use Mail\Handler\Handler;
-use Mail\Handler\SMTPHandler;
 
 class Mail
 {
@@ -27,7 +26,7 @@ class Mail
         $this->adapter = new StashAdapter($pool);
         $this->rateLimit = new RateLimit("mail", 3, 3600, $this->adapter);
 
-        $this->handler = new SMTPHandler($twig);
+        $this->handler = Handler::get($_ENV["HANDLER"], $twig);
     }
 
     public function makeMessage(array $data)
