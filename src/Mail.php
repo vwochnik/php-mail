@@ -24,7 +24,7 @@ class Mail
         $this->dnsbl = $dnsbl;
         $this->pool = $pool;
 
-        $this->adapter = new StashAdapter($this->pool);
+        $this->adapter = new StashAdapter($pool);
         $this->rateLimit = new RateLimit("mail", 3, 3600, $this->adapter);
 
         $this->handler = new SMTPHandler($twig);
@@ -39,7 +39,7 @@ class Mail
 
     public function send($message)
     {
-        if(!$this->rateLimit->check($message->getIP()));
+        if(!$this->rateLimit->check($message->getIP()))
         {
             throw new Exception("rate limit exceeded");
         }
