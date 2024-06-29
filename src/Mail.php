@@ -50,17 +50,17 @@ class Mail
         {
             throw new MailException("rate limit exceeded");
         }
+
+        return new Message($data);
     }
 
-    public function send($data)
+    public function send($message)
     {
-        if($this->dnsbl->isListed($data["ip"]))
+        if($this->dnsbl->isListed($message->getIP()))
         {
             throw new MailException("spam detected");
         }
 
-        $today = new \DateTime('now');
-        $data["date"] = $today->format('Y-m-d');
 
         $mail = $this->setupMailer();
 
@@ -68,13 +68,13 @@ class Mail
         {
             //Recipients
             $mail->setFrom($_ENV["MAIL_ADDR"], $_ENV["MAIL_NAME"]);
-            $mail->addReplyTo($data["email"], $data["name"]);
+            $mail->addReplyTo($message->getEmail(), $message->getName());
             $mail->addAddress($_ENV["MAIL_ADDR"], $_ENV["MAIL_NAME"]);
 
             $mail->isHTML(true);
-            $mail->Subject = $data["subject"];
-            $mail->Body    = $this->twig->render("html.tpl", $data);
-            $mail->AltBody = $this->twig->render("text.tpl", $data);
+            $mail->Subject = $message->getSubject();
+            $mail->Body    = $this->twig->render("html.tpl", $message->get());
+            $mail->AltBody = $this->twig->render("text.tpl", $message->get());
 
             $mail->send();
         } catch (Exception $e) {

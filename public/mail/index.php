@@ -46,10 +46,12 @@ if (json_last_error() != JSON_ERROR_NONE) {
 
 $data["ip"] = get_ip();
 $data["agent"] = $_SERVER['HTTP_USER_AGENT'];
+$today = new \DateTime('now');
+$data["date"] = $today->format('Y-m-d');
 
 try
 {
-    $mail->validate($data);
+    $message = $mail->validate($data);
 }
 catch (MailException $e)
 {
@@ -58,7 +60,7 @@ catch (MailException $e)
 
 try
 {
-    $mail->send($data);
+    $mail->send($message);
     success();
 }
 catch (MailException $e)
