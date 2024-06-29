@@ -34,6 +34,11 @@ class Message
         $v->rule(function($field, $value, $params, $fields) {
             return ($value == strip_tags($value));
         }, ["name", "subject", "message", "agent"])->message("{field} contains html tags");
+        $v->rule(function($field, $value, $params, $fields) {
+            list($user, $domain) = explode('@', $value);
+            $arr = dns_get_record($domain, DNS_MX);
+            return count($arr) > 0;
+        }, "email")->message("{field} is bad");
 
         if(!$v->validate())
         {
