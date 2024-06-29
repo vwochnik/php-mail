@@ -1,6 +1,6 @@
 <?php
 $mail = require dirname(__DIR__, 2) .'/mail.php';
-use Mail\MailException;
+use Mail\Exception;
 
 function fail($code, $error)
 {
@@ -53,7 +53,7 @@ try
 {
     $message = $mail->validate($data);
 }
-catch (MailException $e)
+catch (Exception $e)
 {
     fail(400, $e->getMessage());
 }

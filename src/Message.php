@@ -17,7 +17,7 @@ class Message
 			if (property_exists($this, $key)) {
 				$this->{$key} = $value;
 			} else {
-				throw new MailException('Property "' . $key . '" doesn\'t exists in ' . get_class($this));
+				throw new Exception('Property "' . $key . '" doesn\'t exists in ' . get_class($this));
 			}
 		}
 	}

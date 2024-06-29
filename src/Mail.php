@@ -3,7 +3,7 @@ namespace Mail;
 
 use Valitron\Validator;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\Exception as MailException;
 use \PalePurple\RateLimit\RateLimit;
 use \PalePurple\RateLimit\Adapter\Stash as StashAdapter;
 
@@ -43,12 +43,12 @@ class Mail
             {
                 return strtolower($k[0]);
             }, $v->errors()));
-            throw new MailException($message);
+            throw new Exception($message);
         }
 
         if(!$this->rateLimit->check($data["ip"]))
         {
-            throw new MailException("rate limit exceeded");
+            throw new Exception("rate limit exceeded");
         }
 
         return new Message($data);
@@ -58,7 +58,7 @@ class Mail
     {
         if($this->dnsbl->isListed($message->getIP()))
         {
-            throw new MailException("spam detected");
+            throw new Exception("spam detected");
         }
 
 
@@ -77,8 +77,8 @@ class Mail
             $mail->AltBody = $this->twig->render("text.tpl", $message->get());
 
             $mail->send();
-        } catch (Exception $e) {
-            throw new MailException($e->getMessage());
+        } catch (MailException $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
