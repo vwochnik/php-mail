@@ -1,6 +1,8 @@
 <?php
 namespace Mail;
 
+use Valitron\Validator;
+
 class Message
 {
     protected $name;
@@ -17,10 +19,31 @@ class Message
 			if (property_exists($this, $key)) {
 				$this->{$key} = $value;
 			} else {
-				throw new Exception('Property "' . $key . '" doesn\'t exists in ' . get_class($this));
+				throw new Exception($key ." is invalid");
 			}
 		}
 	}
+
+    public function validate()
+    {
+        $v = new Validator($this->get());
+        $v->rule('required', ['name', 'email', 'subject', 'message', 'ip', 'agent']);
+        $v->rule('regex', 'name', "/^[\\p{L}'][ \\p{L}'-]*[\\p{L}]$/u");
+        $v->rule('email', 'email');
+        $v->rule('ip', 'ip');
+        $v->rule(function($field, $value, $params, $fields) {
+            return ($value == strip_tags($value));
+        }, ["name", "subject", "message", "agent"])->message("{field} contains html tags");
+
+        if(!$v->validate())
+        {
+            $message = implode(", ", array_map(function($k)
+            {
+                return strtolower($k[0]);
+            }, $v->errors()));
+            throw new Exception($message);
+        }
+    }
 
     public function get()
     {

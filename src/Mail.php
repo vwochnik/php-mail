@@ -1,7 +1,6 @@
 <?php
 namespace Mail;
 
-use Valitron\Validator;
 use \PalePurple\RateLimit\RateLimit;
 use \PalePurple\RateLimit\Adapter\Stash as StashAdapter;
 use Twig\Environment as TwigEnvironment;
@@ -31,27 +30,11 @@ class Mail
         $this->handler = new SMTPHandler($twig);
     }
 
-    public function validate(array $data)
+    public function makeMessage(array $data)
     {
-        $v = new Validator($data);
-        $v->rule('required', ['name', 'email', 'subject', 'message', 'ip', 'agent']);
-        $v->rule('regex', 'name', "/^[\\p{L}'][ \\p{L}'-]*[\\p{L}]$/u");
-        $v->rule('email', 'email');
-        $v->rule('ip', 'ip');
-        $v->rule(function($field, $value, $params, $fields) {
-            return ($value == strip_tags($value));
-        }, ["name", "subject", "message", "agent"])->message("{field} contains html tags");
-
-        if(!$v->validate())
-        {
-            $message = implode(", ", array_map(function($k)
-            {
-                return strtolower($k[0]);
-            }, $v->errors()));
-            throw new Exception($message);
-        }
-
-        return new Message($data);
+        $message = new Message($data);
+        $message->validate();
+        return $message;
     }
 
     public function send($message)
@@ -68,5 +51,4 @@ class Mail
 
         $this->handler->send($message);
     }
-
 }

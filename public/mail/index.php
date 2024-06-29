@@ -51,7 +51,7 @@ $data["date"] = $today->format('Y-m-d');
 
 try
 {
-    $message = $mail->validate($data);
+    $message = $mail->makeMessage($data);
 }
 catch (Exception $e)
 {
