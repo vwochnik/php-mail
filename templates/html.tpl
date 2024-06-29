@@ -48,7 +48,7 @@
 <td align="right" valign="top">User-Agent:&nbsp;</td><td valign="top">{{agent}}</td>
 </tr>
 </table>
-{{message}}
+{{message|nl2br}}
 </td>
 </tr>
 </table>
