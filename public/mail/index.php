@@ -63,7 +63,7 @@ try
     $mail->send($message);
     success();
 }
-catch (MailException $e)
+catch (Exception $e)
 {
     fail(500, $e->getMessage());
 }

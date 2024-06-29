@@ -3,14 +3,15 @@ namespace Mail\Handler;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as MailException;
+use Twig\Environment as TwigEnvironment;
 use Mail\Message;
 use Mail\Exception;
 
 class SMTPHandler implements Handler
 {
-    private $twig;
+    private TwigEnvironment $twig;
 
-    public function __construct($twig)
+    public function __construct(TwigEnvironment $twig)
     {
         $this->twig = $twig;
     }
