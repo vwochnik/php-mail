@@ -12,16 +12,6 @@ class Config
         $this->config = require $this->root . DIRECTORY_SEPARATOR . "config.php";
     }
 
-    public function getTemplateDirectory()
-    {
-        return $this->root . DIRECTORY_SEPARATOR . "templates";
-    }
-
-    public function getStashDirectory()
-    {
-        return $this->root . DIRECTORY_SEPARATOR . "tmp";
-    }
-
     function get($path, $default = null)
     {
         $current = $this->config;

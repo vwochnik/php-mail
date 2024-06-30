@@ -26,7 +26,7 @@ class Mail
         ));
 
         $this->pool = new Pool(new Stash\Driver\FileSystem(array(
-           "path" => $config->getStashDirectory()
+           "path" => $config->get("directories.stash")
        )));
 
         $this->rateLimit = new RateLimit("mail", 3, 3600, new StashAdapter($this->pool));

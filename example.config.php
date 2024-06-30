@@ -13,6 +13,10 @@ return array(
             "b.barracudacentral.org"
         )
     ),
+    "directories" => array(
+        "stash" => __DIR__ . DIRECTORY_SEPARATOR . "tmp",
+        "templates" => __DIR__ . DIRECTORY_SEPARATOR . "templates"
+    ),
     "smtp" => array(
         "host" => "",
         "port" => 465,

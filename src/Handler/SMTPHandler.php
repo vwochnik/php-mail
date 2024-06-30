@@ -19,7 +19,7 @@ class SMTPHandler extends Handler
     {
         $this->config = $config;
 
-        $this->loader = new FilesystemLoader($config->getTemplateDirectory());
+        $this->loader = new FilesystemLoader($config->get("directories.templates"));
         $this->twig = new Environment($this->loader, []);
     }
 
