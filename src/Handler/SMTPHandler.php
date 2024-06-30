@@ -25,15 +25,14 @@ class SMTPHandler extends Handler
 
     public function send(Message $message)
     {
-        $mainConfig = $this->config->getMainConfiguration();
         $mail = $this->setupMailer();
 
         try
         {
             //Recipients
-            $mail->setFrom($mainConfig["mail_addr"], $mainConfig["mail_name"]);
+            $mail->setFrom($this->config->get("main.mail_addr"), $this->config->get("main.mail_name"));
             $mail->addReplyTo($message->getEmail(), $message->getName());
-            $mail->addAddress($mainConfig["mail_addr"], $mainConfig["mail_name"]);
+            $mail->addAddress($this->config->get("main.mail_addr"), $this->config->get("main.mail_name"));
 
             $mail->isHTML(true);
             $mail->Subject = $message->getSubject();
@@ -48,19 +47,17 @@ class SMTPHandler extends Handler
 
     private function setupMailer()
     {
-        $smtpConfig = $this->config->getSMTPConfiguration();
-
         $mail = new PHPMailer(true);
         //Server settings
         $mail->SMTPDebug = 0;
         $mail->CharSet   = 'UTF-8';
         $mail->isSMTP();
-        $mail->Host       = $smtpConfig["host"];
+        $mail->Host       = $this->config->get("smtp.host");
         $mail->SMTPAuth   = true;
-        $mail->Username   = $smtpConfig["user"];
-        $mail->Password   = $smtpConfig["pass"];
-        $mail->SMTPSecure = $smtpConfig["secure"];
-        $mail->Port       = $smtpConfig["port"];
+        $mail->Username   = $this->config->get("smtp.username");
+        $mail->Password   = $this->config->get("smtp.password");
+        $mail->SMTPSecure = $this->config->get("smtp.secure");
+        $mail->Port       = $this->config->get("smtp.port");
 
         return $mail;
     }

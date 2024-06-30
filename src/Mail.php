@@ -17,10 +17,13 @@ class Mail
     protected RateLimit $rateLimit;
     protected Handler $handler;
 
-    public function __construct(Config $config, DNSBL $dnsbl)
+    public function __construct(Config $config)
     {
         $this->config = $config;
-        $this->dnsbl = $dnsbl;
+
+        $this->dnsbl = new DNSBL(array(
+            'blacklists' => $config->get("main.dnsbl")
+        ));
 
         $this->pool = new Pool(new Stash\Driver\FileSystem(array(
            "path" => $config->getStashDirectory()
@@ -28,8 +31,7 @@ class Mail
 
         $this->rateLimit = new RateLimit("mail", 3, 3600, new StashAdapter($this->pool));
 
-        $mainConfig = $this->config->getMainConfiguration();
-        $this->handler = Handler::get($mainConfig["handler"], $config);
+        $this->handler = Handler::get($config->get("main.handler"), $config);
     }
 
     public function makeMessage(array $data)
@@ -52,5 +54,10 @@ class Mail
         }
 
         $this->handler->send($message);
+    }
+
+    public function purge()
+    {
+        $this->pool->purge();
     }
 }

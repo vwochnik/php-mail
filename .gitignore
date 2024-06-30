@@ -1,5 +1,5 @@
 .idea
-config.ini
+config.php
 *.http
 /vendor/
 /tmp/

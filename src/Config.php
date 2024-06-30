@@ -9,7 +9,7 @@ class Config
     public function __construct(string $root)
     {
         $this->root = $root;
-        $this->config = \parse_ini_file($this->root . DIRECTORY_SEPARATOR . "config.ini", true);
+        $this->config = require $this->root . DIRECTORY_SEPARATOR . "config.php";
     }
 
     public function getTemplateDirectory()
@@ -22,13 +22,19 @@ class Config
         return $this->root . DIRECTORY_SEPARATOR . "tmp";
     }
 
-    public function getMainConfiguration()
+    function get($path, $default = null)
     {
-        return $this->config["main"];
-    }
+        $current = $this->config;
+        $p = strtok($path, '.');
 
-    public function getSMTPConfiguration()
-    {
-        return $this->config["smtp"];
+        while ($p !== false) {
+            if (!isset($current[$p])) {
+                return $default;
+            }
+            $current = $current[$p];
+            $p = strtok('.');
+        }
+
+        return $current;
     }
 }
